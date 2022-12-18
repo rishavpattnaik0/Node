@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <div style="text-align: center;">
+    <button onclick="shreyas()">
+        Insert Employee Details
+    </button>
+    <button onclick="shreyas1();">Get Employees</button>
+    <br/>
+    <p id="get"></p>
+    <button onclick="shreyas2();">Delete Employees</button>
+</div>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+</body>
+
+<script>
+    
+    function shreyas(){
+        axios.post("http://localhost:1999/createDatabase").then(res=>{
+            console.log(res);
+        }).catch(err=>{
+            console.log(err);
+        })
+    }
+
+    function shreyas1(){
+        let array=[];
+    axios.get("http://localhost:1999/getEmployees").then(res=>{
+        console.log(res.data);
+        array=res.data;
+        for(var i=0;i<array.length;i++)
+        {
+            document.getElementById('get').innerHTML+=array[i].name;
+            document.getElementById('get').innerHTML+="  ";
+            document.getElementById('get').innerHTML+=array[i].SSN;
+            document.getElementById('get').innerHTML+="   "; 
+            document.getElementById('get').innerHTML+=array[i].Gender;
+            document.getElementById('get').innerHTML+="    ";
+            document.getElementById('get').innerHTML+=array[i].Salary;
+            document.getElementById('get').innerHTML+="    ";
+            document.getElementById('get').innerHTML+=array[i].Department;
+            document.getElementById('get').innerHTML+="<br>"
+        }
+    }).catch((err) =>{
+        console.log(err);
+    })
+    }
+    function shreyas2(){
+        location.reload();
+        axios.delete("http://localhost:1999/deleteEmployee").then(res=>{
+            console.log(res.data);
+        }).catch(err=>{
+            console.log(err);
+        })
+        }
+</script>
+</html>
